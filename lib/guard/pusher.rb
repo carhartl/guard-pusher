@@ -2,7 +2,7 @@ require 'guard'
 require 'guard/guard'
 
 module Guard
-  class GuardPusher < Guard
+  class Pusher < Guard
 
     def initialize(watchers = [], options = {})
       super
