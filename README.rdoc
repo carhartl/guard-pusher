@@ -1,8 +1,7 @@
 = guard-pusher
 
-Pusher guard allows to automatically send a Pusher message to any number of browsers.
-when files are modified. That message can for instance be used to reload a page
-during development (think Livereload for iPad etc.).
+Pusher guard allows to automatically send a Pusher message to any number of browserswhen files are modified. That message can for instance be used to reload a page
+during development. Sort of Livereload but for iPad, iPhone etc. without the ability to install the necessary extension.
 
 == Usage
 
