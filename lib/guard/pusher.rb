@@ -7,9 +7,9 @@ module Guard
 
     def initialize(watchers = [], options = {})
       super
-      ::Pusher.app_id = options[:app_id] if ::Pusher.app_id.nil?
-      ::Pusher.key = options[:key] if ::Pusher.key.nil?
-      ::Pusher.secret = options[:secret] if ::Pusher.secret.nil?
+      [ :app_id, :key, :secret ].each { |attr|
+        ::Pusher.send("#{attr}=", options[attr]) unless ::Pusher.send("#{attr}")
+      }
     end
 
     def run_on_change(paths)
