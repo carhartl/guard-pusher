@@ -1,3 +1,5 @@
+pkg/*
+*.gem
 .bundle
-pkg
+Gemfile.lock
 .rvmrc
