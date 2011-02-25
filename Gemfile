@@ -2,6 +2,8 @@ source "http://rubygems.org"
 # Add dependencies required to use your gem here.
 # Example:
 #   gem "activesupport", ">= 2.3.5"
+gem "guard", ">= 0.3"
+gem "pusher", ">= 0.8"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

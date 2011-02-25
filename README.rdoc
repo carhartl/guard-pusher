@@ -1,9 +1,20 @@
 = guard-pusher
 
-Description goes here.
+== Usage
+
+* Get a Pusher account: http://pusherapp.com/ (also available as Heroku add-on).
+
+* Include the following script:
+
+<script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
+<script>
+  new Pusher(<key>).subscribe('guard-pusher').bind('reload', function() {
+      location.reload();
+  });
+</script>
 
 == Contributing to guard-pusher
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
 * Fork the project

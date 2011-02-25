@@ -1,0 +1,3 @@
+guard 'pusher' do
+  watch(%r{public/.+\.(css|js)})
+end
