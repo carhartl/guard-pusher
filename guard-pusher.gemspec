@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{guard-pusher}
-  s.version = "0.0.0"
+  s.version = "0.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Klaus Hartl"]
   s.date = %q{2011-02-25}
-  s.description = %q{TODO: longer description of your gem}
+  s.description = %q{Guard::Pusher automatically sends a Pusher message. Upon hat message you can say reload a page (think Livereload for iPad etc.)}
   s.email = %q{klaus.hartl@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -20,17 +20,22 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     "Gemfile",
+    "Gemfile.lock",
     "LICENSE.txt",
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "guard-pusher.gemspec",
+    "lib/guard/pusher.rb",
+    "lib/guard/pusher/templates/Guardfile",
+    "spec/guard/pusher_spec.rb",
     "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/carhartl/guard-pusher}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.5.0}
-  s.summary = %q{TODO: one-line summary of your gem}
+  s.summary = %q{Guard gem for Pusher}
   s.test_files = [
     "spec/guard/pusher_spec.rb",
     "spec/spec_helper.rb"

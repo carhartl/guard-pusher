@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "guard-pusher"
   gem.homepage = "http://github.com/carhartl/guard-pusher"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Guard gem for Pusher}
+  gem.description = %Q{Guard::Pusher automatically sends a Pusher message. Upon hat message you can say reload a page (think Livereload for iPad etc.)}
   gem.email = "klaus.hartl@gmail.com"
   gem.authors = ["Klaus Hartl"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
