@@ -5,7 +5,7 @@ That message can for instance be used to reload a page during development (think
 
 == Usage
 
-* Get a Pusher account: http://pusherapp.com/ (also available as Heroku add-on).
+* Get a free developer account Pusher account: http://pusherapp.com (also available as Heroku add-on).
 
 * Include the following script (example for reloading a page):
 
