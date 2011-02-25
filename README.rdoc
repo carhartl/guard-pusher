@@ -1,10 +1,13 @@
 = guard-pusher
 
+Pusher guard allows to automatically & intelligently send a Pusher message when files are modified.
+That message can for instance be used to reload a page during development (think Livereload for iPad etc.).
+
 == Usage
 
 * Get a Pusher account: http://pusherapp.com/ (also available as Heroku add-on).
 
-* Include the following script:
+* Include the following script (example for reloading a page):
 
     <script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
     <script>
