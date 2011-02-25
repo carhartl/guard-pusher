@@ -6,12 +6,12 @@
 
 * Include the following script:
 
-<script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
-<script>
-  new Pusher(<key>).subscribe('guard-pusher').bind('reload', function() {
-      location.reload();
-  });
-</script>
+    <script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
+    <script>
+        new Pusher(<key>).subscribe('guard-pusher').bind('reload', function() {
+            location.reload();
+       });
+    </script>
 
 == Contributing to guard-pusher
 
