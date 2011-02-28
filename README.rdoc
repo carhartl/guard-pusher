@@ -3,11 +3,37 @@
 Pusher guard allows to automatically send a Pusher message to any number of browserswhen files are modified. That message can for instance be used to reload a page
 during development. Sort of Livereload but for iPad, iPhone etc. without the ability to install the necessary extension.
 
-== Usage
+- Tested on Ruby 1.8.7 & 1.9.2.
 
-* Get a free Pusher developer account: http://pusherapp.com (also available as Heroku add-on).
+== Install
 
-* Include the following script (example for reloading a page):
+Please be sure to have {Guard}[https://github.com/guard/guard] installed before continue.
+
+Install the gem:
+
+    gem install guard-pusher
+
+Or add it to your Gemfile
+
+    gem 'guard-pusher'
+
+and run
+
+    bundle install
+
+Add guard definition to your Guardfile by running this command:
+
+    guard init pusher
+
+Get a free Pusher developer account: http://pusherapp.com (also available as Heroku add-on).
+
+Add API credentials to your guard definition:
+
+    guard 'pusher', :app_id => '...', :key => '...', :secret => '...' do
+      ...
+    end
+
+Include the following script (example for reloading a page):
 
     <script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
     <script>
@@ -16,18 +42,18 @@ during development. Sort of Livereload but for iPad, iPhone etc. without the abi
        });
     </script>
 
-== Contributing to guard-pusher
+== Usage
 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+Please read {Guard usage doc}[https://github.com/guard/guard#readme]
 
-== Copyright
+== Development
 
-Copyright (c) 2011 Klaus Hartl. See LICENSE.txt for
-further details.
+- Source hosted at {GitHub}[https://github.com/guard/guard-pusher]
+- Report issues, questions, feature requests on {GitHub Issues}[https://github.com/guard/guard-pusher/issues]
+
+Pull requests are very welcome! Make sure your patches are well tested. Please create a topic branch for every separate change you make.
+
+== Authors
+
+{Klaus Hartl}[https://github.com/carhartl]
 
