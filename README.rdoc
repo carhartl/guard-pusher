@@ -27,17 +27,22 @@ Add guard definition to your Guardfile by running this command:
 
 Get a free Pusher developer account: http://pusherapp.com (also available as Heroku add-on).
 
-Add API credentials to your guard definition:
+Create a YAML file containing your API credentials for the development environment and save it in the config directory:
 
-    guard 'pusher', :app_id => '...', :key => '...', :secret => '...' do
-      ...
-    end
+    # config/pusher.yml
+    development:
+      app_id: ...
+      key: ...
+      secret: ...
 
-Include the following script (example for reloading a page):
+You can also pass these credentials as option in your guard definition, see Options below.
+
+Include the following JavaScript:
 
     <script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
     <script>
-        new Pusher(<key>).subscribe('guard-pusher').bind('reload', function() {
+        new Pusher(<key>).subscribe('guard-pusher').bind('guard', function() {
+            // do something - for instance simply reload the page:
             location.reload();
        });
     </script>
@@ -45,6 +50,22 @@ Include the following script (example for reloading a page):
 == Usage
 
 Please read {Guard usage doc}[https://github.com/guard/guard#readme]
+
+== Options
+
+Pass Pusher API credentials as option:
+
+    guard 'pusher', :app_id => ..., :key => '...', :secret => '...' do
+      ...
+    end
+
+Set the name of the event you're binding to:
+
+    guard 'pusher', :event => 'ping' do
+      ...
+    end
+
+    new Pusher(...).subscribe('guard-pusher').bind('ping', function() { ... });
 
 == Development
 

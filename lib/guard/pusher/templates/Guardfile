@@ -1,4 +1,4 @@
-guard 'pusher', :app_id => 'your app_id', :key => 'your key', :secret => 'your secret' do
+guard 'pusher' do
   # Rails example
   watch(%r{public/.+\.(css|js)})
 end
