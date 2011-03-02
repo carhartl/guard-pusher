@@ -30,12 +30,17 @@ module Guard
 
     private
 
-    def config_pusher_with(credentials)
-      %w{app_id key secret}.each do |config|
-        return false unless (value = credentials[config] || credentials[config.to_sym])
+    def config_pusher_with(options)
+      %w{app_id key secret}.inject(Hash.new) { |h, k|
+        h[k] = options[k] || options[k.to_sym]
+        h
+      }.each { |config, value|
         ::Pusher.send("#{config}=", value)
-      end
-      true
+      }
+
+      ::Pusher['guard-pusher']
+
+      rescue ::Pusher::ConfigurationError
     end
 
   end
