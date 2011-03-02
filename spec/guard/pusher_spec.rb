@@ -54,6 +54,25 @@ describe Guard::Pusher do
     end
   end
 
+  describe "options" do
+    before(:each) do
+      File.should_receive(:file?).
+        with('config/pusher.yml').
+        and_return(true)
+
+      YAML.should_receive(:load_file).
+        with('config/pusher.yml').
+        and_return({ "development" => { "app_id" => 42, "key" => "fake_key", "secret" => "fake_secret" }})
+    end
+
+    it "event" do
+      channel = mock(Pusher::Channel)
+      Pusher.stub(:[]).and_return(channel)
+      channel.should_receive(:trigger).with('custom', {})
+      Guard::Pusher.new([], { :event => 'custom' }).run_on_change(['foo'])
+    end
+  end
+
   describe "run_on_change" do
     it "sends Pusher message" do
       channel = mock(Pusher::Channel)
