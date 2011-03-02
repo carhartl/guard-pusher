@@ -2,70 +2,96 @@ require 'spec_helper'
 
 describe Guard::Pusher do
 
+  def with_yaml(config = nil)
+    config ||= {
+      'development' => {
+        'app_id' => 42,
+        'key'    => 'fake_key',
+        'secret' => 'fake_secret'
+      }
+    }
+
+    File.should_receive(:file?).
+      with('config/pusher.yml').
+      and_return(true)
+
+    YAML.should_receive(:load_file).
+      with('config/pusher.yml').
+      and_return(config)
+  end
+
+  def without_yaml
+    File.should_receive(:file?).
+      with('config/pusher.yml').
+      and_return(false)
+  end
+
   describe "configuration" do
-    context "provided through YAML file" do
-      before(:each) do
-        File.should_receive(:file?).
-          with('config/pusher.yml').
-          and_return(true)
 
-        YAML.should_receive(:load_file).
-          with('config/pusher.yml').
-          and_return({ "development" => { "app_id" => 42, "key" => "fake_key", "secret" => "fake_secret" }})
+    context "via YAML file" do
+      context "when credentials are complete" do
+        before(:each) do
+          with_yaml
+        end
+
+        it "is successful" do
+          Guard::UI.should_receive(:info).with(/.*Pusher is ready.*/, :reset => true)
+          Guard::Pusher.new([])
+        end
       end
 
-      it "requires 'app_id', 'key' and 'secret'" do
-        Guard::UI.should_receive(:info).with(/.*Pusher is ready.*/, :reset => true)
-        Guard::Pusher.new([])
-      end
-    end
+      context "when credentials are incomplete" do
+        before(:each) do
+          with_yaml({ 'development' => { 'key' => 'fake_key', 'secret' => 'fake_secret' }})
+          Pusher.app_id = nil
+        end
 
-    context "provided through options" do
-      before(:each) do
-        File.should_receive(:file?).
-          with('config/pusher.yml').
-          and_return(false)
-      end
-
-      it "requires 'app_id', 'key' and 'secret'" do
-        Guard::UI.should_receive(:info).with(/.*Pusher is ready.*/, :reset => true)
-        Guard::Pusher.new([], {
-          :app_id => 42,
-          :key    => 'fake_key',
-          :secret => 'fake_secret'
-        })
+        it "issues a warning" do
+          Guard::UI.should_receive(:info).with(/.*Pusher not properly configured.*/, :reset => true)
+          Guard::Pusher.new([])
+        end
       end
     end
 
-    context "missing the necessery keys" do
-      before(:each) do
-        File.should_receive(:file?).
-          with('config/pusher.yml').
-          and_return(false)
+    context "via options" do
+      context "when credentials are complete" do
+        before(:each) do
+          without_yaml
+        end
+
+        it "is successful" do
+          Guard::UI.should_receive(:info).with(/.*Pusher is ready.*/, :reset => true)
+          Guard::Pusher.new([], {
+            :app_id => 42,
+            :key    => 'fake_key',
+            :secret => 'fake_secret'
+          })
+        end
       end
 
-      it "does not attempt to configure Pusher and issues a warning" do
-        Guard::UI.should_receive(:info).with(/.*Pusher not properly configured.*/, :reset => true)
-        Guard::Pusher.new([], {
-          :key    => 'fake_key',
-          :secret => 'fake_secret'
-        })
+      context "when credentials are incomplete" do
+        before(:each) do
+          without_yaml
+        end
+
+        it "issues a warning" do
+          Guard::UI.should_receive(:info).with(/.*Pusher not properly configured.*/, :reset => true)
+          Guard::Pusher.new([], {
+            :key    => 'fake_key',
+            :secret => 'fake_secret'
+          })
+        end
       end
     end
+
   end
 
   describe "options" do
     before(:each) do
-      File.should_receive(:file?).
-        with('config/pusher.yml').
-        and_return(true)
-
-      YAML.should_receive(:load_file).
-        with('config/pusher.yml').
-        and_return({ "development" => { "app_id" => 42, "key" => "fake_key", "secret" => "fake_secret" }})
+      with_yaml
     end
 
-    it "event" do
+    it ":event" do
       channel = mock(Pusher::Channel)
       Pusher.stub(:[]).and_return(channel)
       channel.should_receive(:trigger).with('custom', {})
@@ -73,7 +99,7 @@ describe Guard::Pusher do
     end
   end
 
-  describe "run_on_change" do
+  describe "#run_on_change" do
     it "sends Pusher message" do
       channel = mock(Pusher::Channel)
       Pusher.should_receive(:[]).with('guard-pusher').twice.and_return(channel)
