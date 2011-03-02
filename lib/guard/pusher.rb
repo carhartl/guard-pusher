@@ -5,6 +5,19 @@ require 'pusher'
 module Guard
   class Pusher < Guard
 
+    def self.configure(options)
+      %w{app_id key secret}.inject(Hash.new) { |hash, key|
+        hash[key] = options[key] || options[key.to_sym]
+        hash
+      }.each { |config, value|
+        ::Pusher.send("#{config}=", value)
+      }
+
+      ::Pusher['guard-pusher']
+
+      rescue ::Pusher::ConfigurationError
+    end
+
     def initialize(watchers = [], options = {})
       super
 
@@ -16,7 +29,7 @@ module Guard
         options
       end
 
-      if config_pusher_with(config)
+      if self.class.configure(config)
         UI.info('Pusher is ready.', :reset => true)
       else
         UI.info("D'oh! Pusher not properly configured. Make sure to add app_id, key and secret.", :reset => true)
@@ -25,22 +38,6 @@ module Guard
 
     def run_on_change(paths)
       ::Pusher['guard-pusher'].trigger(@options[:event] || 'guard', {})
-    end
-
-
-    private
-
-    def config_pusher_with(options)
-      %w{app_id key secret}.inject(Hash.new) { |h, k|
-        h[k] = options[k] || options[k.to_sym]
-        h
-      }.each { |config, value|
-        ::Pusher.send("#{config}=", value)
-      }
-
-      ::Pusher['guard-pusher']
-
-      rescue ::Pusher::ConfigurationError
     end
 
   end
