@@ -38,7 +38,7 @@ module Guard
     end
 
     def run_on_change(paths)
-      ::Pusher['guard-pusher'].trigger(@options[:event] || 'guard', {})
+      ::Pusher['guard-pusher'].trigger(@options[:event] || 'guard', { :paths => paths })
     end
 
   end
