@@ -11,19 +11,14 @@ describe Guard::Pusher do
       }
     }
 
-    File.should_receive(:file?).
-      with('config/pusher.yml').
-      and_return(true)
-
-    YAML.should_receive(:load_file).
-      with('config/pusher.yml').
-      and_return(config)
+    File.should_receive(:file?).with('config/pusher.yml').and_return(true)
+    File.should_receive(:read).with('config/pusher.yml')
+    ERB.should_receive(:new).and_return(double('erb', :result => 'erb_foo'))
+    YAML.should_receive(:load).with('erb_foo').and_return(config)
   end
 
   def without_yaml
-    File.should_receive(:file?).
-      with('config/pusher.yml').
-      and_return(false)
+    File.should_receive(:file?).with('config/pusher.yml').and_return(false)
   end
 
   describe "configuration" do
