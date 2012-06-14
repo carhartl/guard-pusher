@@ -90,16 +90,16 @@ describe Guard::Pusher do
       channel = mock(Pusher::Channel)
       Pusher.stub(:[]).and_return(channel)
       channel.should_receive(:trigger).with('custom', { :paths => ['foo'] })
-      Guard::Pusher.new([], { :event => 'custom' }).run_on_change(['foo'])
+      Guard::Pusher.new([], { :event => 'custom' }).run_on_changes(['foo'])
     end
   end
 
-  describe "#run_on_change" do
+  describe "#run_on_changes" do
     it "sends Pusher message" do
       channel = mock(Pusher::Channel)
       Pusher.should_receive(:[]).with('guard-pusher').twice.and_return(channel)
       channel.should_receive(:trigger).with('guard', { :paths => ['foo'] })
-      subject.run_on_change(['foo'])
+      subject.run_on_changes(['foo'])
     end
   end
 
